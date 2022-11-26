@@ -12,14 +12,6 @@ vim.g.mapleader = " "
 vim.api.nvim_set_keymap("i", "jk", "<Esc>",{noremap = true,silent = true})
 
 -- RANDOM SETTINGS
--- setup colorscheme
-
-local colorscheme = "tokyonight"
-
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-if not status_ok then
-  return
-end
 -- Set completeopt to have a better completion experience
 -- :help completeopt
 -- menuone: popup even when there's only one match
@@ -73,13 +65,13 @@ cmp.setup({
 vim.opt.updatetime = 100
 
 -- Show diagnostic popup on cursor hover
-local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
+--[[ local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
    vim.diagnostic.open_float(nil, { focusable = false })
   end,
   group = diag_float_grp,
-})
+}) ]]
 
 
 -- have a fixed column for the diagnostics to appear in

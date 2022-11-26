@@ -45,22 +45,34 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
 
--- LSP
-
+  -- Have packer manage itself
+  use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" }
+  -- autopairs
+  use {
+    "windwp/nvim-autopairs",
+    config = function() require("nvim-autopairs").setup {} end
+  }
+  -- comments
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  }
+  -- LSP
   -- Collection of common configurations for the Nvim LSP client
-use {
+  use {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-}
- use ("jose-elias-alvarez/null-ls.nvim")
+  }
+  use("jose-elias-alvarez/null-ls.nvim")
 
   -- Autocompletion framework
   use("hrsh7th/nvim-cmp")
   use({
     -- cmp LSP completion
     "hrsh7th/cmp-nvim-lsp",
-     "williamboman/mason.nvim" ,
     -- cmp Snippet completion
     "hrsh7th/cmp-vsnip",
     -- cmp Path completion
@@ -74,25 +86,25 @@ use {
   use('hrsh7th/vim-vsnip')
   -- Adds extra functionality over rust analyzer
   use("simrat39/rust-tools.nvim")
-  	use ({
-		"saecki/crates.nvim",
-		tag = "v0.3.0",
-		requires = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("crates").setup {
-				null_ls = {
-					enabled = true,
-					name = "crates.nvim",
-				},
-			}
-		end,
-	})
-	use ({
-		"j-hui/fidget.nvim",
-		config = function()
-			require("fidget").setup()
-		end,
-	})
+  use {
+    "saecki/crates.nvim",
+    tag = "v0.3.0",
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("crates").setup {
+        null_ls = {
+          enabled = true,
+          name = "crates.nvim",
+        },
+      }
+    end,
+  }
+  use({
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup()
+    end,
+  })
 
   -- Optional
   use("nvim-lua/popup.nvim")
@@ -100,22 +112,21 @@ use {
   use("nvim-telescope/telescope.nvim")
 
   -- Some color scheme other then default
-    -- Some color scheme other then default
-    use { "folke/tokyonight.nvim", commit = "66bfc2e8f754869c7b651f3f47a2ee56ae557764" }
-
-        -- nvim NvimTree
+  use { "folke/tokyonight.nvim", commit = "66bfc2e8f754869c7b651f3f47a2ee56ae557764" }
+  use { "catppuccin/nvim", as = "catppuccin" }
+  -- nvim NvimTree
   use {
-  'nvim-tree/nvim-tree.lua',
-  requires = {
-   'nvim-tree/nvim-web-devicons', -- optional, for file icons
-  },
-}
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
+  }
 
--- Status line
-use {
-  'nvim-lualine/lualine.nvim',
-  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-}
+  -- Status line
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
@@ -123,4 +134,3 @@ use {
     require("packer").sync()
   end
 end)
-
