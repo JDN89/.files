@@ -45,12 +45,22 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
 
+-- LSP
+
+  -- Collection of common configurations for the Nvim LSP client
+use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+}
+ use ("jose-elias-alvarez/null-ls.nvim")
 
   -- Autocompletion framework
   use("hrsh7th/nvim-cmp")
   use({
     -- cmp LSP completion
     "hrsh7th/cmp-nvim-lsp",
+     "williamboman/mason.nvim" ,
     -- cmp Snippet completion
     "hrsh7th/cmp-vsnip",
     -- cmp Path completion
@@ -64,6 +74,25 @@ return packer.startup(function(use)
   use('hrsh7th/vim-vsnip')
   -- Adds extra functionality over rust analyzer
   use("simrat39/rust-tools.nvim")
+  	use ({
+		"saecki/crates.nvim",
+		tag = "v0.3.0",
+		requires = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("crates").setup {
+				null_ls = {
+					enabled = true,
+					name = "crates.nvim",
+				},
+			}
+		end,
+	})
+	use ({
+		"j-hui/fidget.nvim",
+		config = function()
+			require("fidget").setup()
+		end,
+	})
 
   -- Optional
   use("nvim-lua/popup.nvim")
