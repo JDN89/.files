@@ -69,7 +69,12 @@ return packer.startup(function(use)
   use("jose-elias-alvarez/null-ls.nvim")
 
   -- Autocompletion framework
+  use "rafamadriz/friendly-snippets"
+  -- cmp plugins
+ -- Autocompletion framework
+    use ("saadparwaiz1/cmp_luasnip")
   use("hrsh7th/nvim-cmp")
+
   use({
     -- cmp LSP completion
     "hrsh7th/cmp-nvim-lsp",
@@ -84,6 +89,8 @@ return packer.startup(function(use)
   -- See hrsh7th other plugins for more great completion sources!
   -- Snippet engine
   use('hrsh7th/vim-vsnip')
+    use { "L3MON4D3/LuaSnip" } --snippet engine
+
   -- Adds extra functionality over rust analyzer
   use("simrat39/rust-tools.nvim")
   use {
