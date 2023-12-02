@@ -22,3 +22,4 @@ end
 # idea . & opens idea independently from terminal session
 set -U fish_user_paths /home/jan/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate-2/bin/idea.sh $fish_user_paths
 
+zoxide init fish | source
