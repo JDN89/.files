@@ -20,15 +20,9 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
-    'simrat39/rust-tools.nvim',
-
   },
-
-
   config = function()
-    local dap = require('dap')
-    -- Adapter configuration
-
+    local dap = require 'dap'
     local dapui = require 'dapui'
 
     require('mason-nvim-dap').setup {
@@ -45,11 +39,6 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
-        'codelldb',
-        'goimports',
-        'gopls',
-        'rust-analyzer',
-        'rustfmt',
       },
     }
 
@@ -93,6 +82,6 @@ return {
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
     -- Install golang specific config
-    require('rust-tools.dap')
+    require('dap-go').setup()
   end,
 }
