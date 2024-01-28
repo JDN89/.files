@@ -299,7 +299,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>ed', vim.diagnostic.open_float, { desc = 'Open floating [D]iagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- Format code
@@ -307,6 +307,13 @@ vim.keymap.set("n", "<leader>fm", function()
     vim.cmd.Format()
   end,
   { desc = '[F]ormat', silent = true }
+)
+
+-- Format code
+vim.keymap.set("n", "<leader>ex", function()
+    vim.cmd.Explore()
+  end,
+  { desc = '[E]xplore', silent = true }
 )
 
 -- [[ Highlight on yank ]]
