@@ -144,7 +144,7 @@ require('lazy').setup({
         end, { desc = 'git diff against last commit' })
 
         -- Toggles
-        map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
+        map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = 'toggle git [b]lame line' })
         map('n', '<leader>td', gs.toggle_deleted, { desc = 'toggle git show deleted' })
 
         -- Text object
@@ -167,6 +167,7 @@ require('lazy').setup({
     priority = 1000,
     opts = {},
   },
+
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -235,6 +236,7 @@ require('lazy').setup({
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.debug',
 
+
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
   --    up-to-date with whatever is in the kickstart repo.
@@ -243,6 +245,25 @@ require('lazy').setup({
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
 }, {})
+
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true,         -- use a classic bottom cmdline for search
+    command_palette = true,       -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false,       -- add a border to hover docs and signature help
+  },
+})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -253,6 +274,8 @@ vim.o.hlsearch = false
 
 -- Make line numbers default
 vim.wo.number = true
+
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -309,12 +332,27 @@ vim.keymap.set("n", "<leader>fm", function()
   { desc = '[F]ormat', silent = true }
 )
 
--- Format code
+-- Open explorer
 vim.keymap.set("n", "<leader>ex", function()
     vim.cmd.Explore()
   end,
   { desc = '[E]xplore', silent = true }
 )
+
+-- Primeagen commands
+
+-- move lines up and down in visual mode
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- joins the current line with the one below, preserving the cursor position and clearing the 'z' mark.
+vim.keymap.set("n", "J", "mzJ`z")
+
+--keep cursor at the same position when scolling downward by half
+vim.keymap.set("n", "<C-D>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- undotree
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -500,7 +538,7 @@ local on_attach = function(_, bufnr)
   end
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
