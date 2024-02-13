@@ -1,5 +1,4 @@
 local bufnr = vim.api.nvim_get_current_buf()
-print("hello form rust.lua")
 
 vim.keymap.set(
 	"n",
