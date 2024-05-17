@@ -537,7 +537,13 @@ require('lazy').setup {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+        clangd = {
+          on_attach = function()
+            print 'attach for C'
+            require('clangd_extensions.inlay_hints').setup_autocmd()
+            require('clangd_extensions.inlay_hints').set_inlay_hints()
+          end,
+        },
         gopls = {},
         -- pyright = {},
         rust_analyzer = {},
@@ -619,6 +625,7 @@ require('lazy').setup {
       },
       formatters_by_ft = {
         lua = { 'stylua' },
+        c = { 'clangd', 'clang-format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -686,7 +693,7 @@ require('lazy').setup {
 
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
+          --  This will expand snippets if the LSP sent a snippet
           ['<CR>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
@@ -718,6 +725,18 @@ require('lazy').setup {
           { name = 'luasnip' },
           { name = 'path' },
         },
+        sorting = {
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.recently_used,
+            require 'clangd_extensions.cmp_scores',
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
       }
     end,
   },
@@ -740,7 +759,7 @@ require('lazy').setup {
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', idependenciesi = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { 'folke/todo-comments.nvim', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
