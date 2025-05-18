@@ -1,0 +1,41 @@
+# Font configuration:
+font-family = "JetBrains Mono"
+font-family-italic = "JetBrains Mono Italic"
+adjust-cell-width = -5%
+adjust-cell-height = 20%
+adjust-underline-position = 6
+adjust-underline-thickness = 40%
+adjust-cursor-thickness = 150%
+
+# # Use a simple titlebar:
+# gtk-titlebar = false
+
+# theme = catppuccin-latte
+theme = catppuccin-frappe
+
+# Cursor:
+cursor-color = F8F8F2
+cursor-style-blink = false
+cursor-text = 000000
+shell-integration-features = no-cursor
+
+# Splits:
+unfocused-split-opacity = 0.4
+split-divider-color = A7DFEF
+
+# Key bindings:
+keybind = alt+one=goto_tab:1
+keybind = alt+two=goto_tab:2
+keybind = alt+three=goto_tab:3
+keybind = alt+four=goto_tab:4
+keybind = alt+five=goto_tab:5
+
+keybind = alt+shift+comma=reload_config
+keybind = alt+shift+i=inspector:toggle
+
+keybind = alt+shift+k=goto_split:top
+keybind = alt+shift+j=goto_split:bottom
+keybind = alt+shift+h=goto_split:left
+keybind = alt+shift+l=goto_split:right
+
+keybind = ctrl+shift+c=copy_to_clipboard
