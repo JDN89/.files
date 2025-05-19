@@ -1,57 +1,69 @@
 #!/usr/bin/env bash
 
-# TODO: next setup from scratch add install scripts
-# probably fish first
-# then all the requirements for neovim
-# then neovim
+echo "🔗 Linking configs..."
 
-# Ensure target directory exists in .files
+# Fish
+echo "Linking ~/.files/.config/fish -> ~/.config/fish"
+ln -sfn "$HOME/.files/.config/fish" "$HOME/.config/fish"
+
+# Ghostty
+echo "Linking ~/.files/.config/ghostty -> ~/.config/ghostty"
+ln -sfn "$HOME/.files/.config/ghostty" "$HOME/.config/ghostty"
+
+# Lazygit
+echo "Linking ~/.files/.config/lazygit -> ~/.config/lazygit"
+ln -sfn "$HOME/.files/.config/lazygit" "$HOME/.config/lazygit"
+
+# Neofetch
+echo "Linking ~/.files/.config/neofetch -> ~/.config/neofetch"
+ln -sfn "$HOME/.files/.config/neofetch" "$HOME/.config/neofetch"
+
+# Neovim
+echo "Linking ~/.files/.config/nvim -> ~/.config/nvim"
+ln -sfn "$HOME/.files/.config/nvim" "$HOME/.config/nvim"
+
+echo "📁 Ensuring ~/.files/.local/share exists..."
 mkdir -p "$HOME/.files/.local/share"
 
-# Move fonts directory if it exists and is not already a symlink
+# Move fonts if not symlink
 if [ -d "$HOME/.local/share/fonts" ] && [ ! -L "$HOME/.local/share/fonts" ]; then
-    echo "Moving ~/.local/share/fonts to ~/.files/.local/share/fonts"
+    echo "📦 Moving ~/.local/share/fonts to ~/.files/.local/share/fonts"
     mv "$HOME/.local/share/fonts" "$HOME/.files/.local/share/fonts"
 fi
 
-# Ensure ~/.local/share exists
 mkdir -p "$HOME/.local/share"
 
-# Backup existing non-symlink fonts directory, if any
+# Backup existing fonts if needed
 if [ -e "$HOME/.local/share/fonts" ] && [ ! -L "$HOME/.local/share/fonts" ]; then
-    echo "Backing up existing ~/.local/share/fonts"
+    echo "🗂 Backing up existing ~/.local/share/fonts"
     mv "$HOME/.local/share/fonts" "$HOME/.local/share/fonts_backup_$(date +%s)"
 fi
 
-# Create symlink if missing or incorrect
-if [ ! -L "$HOME/.local/share/fonts" ]; then
-    echo "Creating symlink ~/.local/share/fonts -> ~/.files/.local/share/fonts"
-    ln -sf "$HOME/.files/.local/share/fonts" "$HOME/.local/share/fonts"
-fi
+# Link fonts
+echo "Linking ~/.files/.local/share/fonts -> ~/.local/share/fonts"
+ln -sfn "$HOME/.files/.local/share/fonts" "$HOME/.local/share/fonts"
 
-# Refresh font cache
-echo "Refreshing font cache..."
+# Refresh fonts
+echo "🔄 Refreshing font cache..."
 fc-cache -f
 
-# Ensure ~/.local/bin exists and is in PATH
+# Ensure ~/.local/bin is in PATH
 mkdir -p "$HOME/.local/bin"
 
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
-    echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"  # or ~/.zshrc
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
     export PATH="$HOME/.local/bin:$PATH"
-    echo "Added ~/.local/bin to PATH"
+    echo "✅ Added ~/.local/bin to PATH"
 fi
 
-# Make buildnvim.sh executable and symlink it
-BUILDNVIM_SRC="$HOME/.files/.local/bin/buildnvim.sh"
-BUILDNVIM_LINK="$HOME/.local/bin/buildnvim"
-
-if [ -f "$BUILDNVIM_SRC" ]; then
-    chmod +x "$BUILDNVIM_SRC"
-    ln -sf "$BUILDNVIM_SRC" "$BUILDNVIM_LINK"
-    echo "Symlinked buildnvim to $BUILDNVIM_LINK"
+# Symlink buildnvim
+if [ -f "$HOME/.files/.local/bin/buildnvim.sh" ]; then
+    chmod +x "$HOME/.files/.local/bin/buildnvim.sh"
+    ln -sf "$HOME/.files/.local/bin/buildnvim.sh" "$HOME/.local/bin/buildnvim"
+    echo "✅ Linked buildnvim"
 else
-    echo "Warning: buildnvim.sh not found at $BUILDNVIM_SRC"
+    echo "⚠️ buildnvim.sh not found"
 fi
 
-echo "Done!"
+echo "✅ Setup complete!"
+
