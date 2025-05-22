@@ -1,0 +1,12 @@
+### TODO
+- [ ] fix aggreassive autocomplete blink cmp
+- [ ] conflict mini surround and nvim flash
+- [ ] learn to work with flash.lua
+- [ ] finish reading docs
+- [ ] place in .dotfiles and create symlinks
+- [ ] look into styling statusline and winbar
+- [ ] play around with a spring boot and gradle project
+    - [ ] compile
+    - [ ] docker setup with sqlite
+    - [ ] create endpoint
+    - [ ] create module

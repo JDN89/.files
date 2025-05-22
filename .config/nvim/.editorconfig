@@ -1,0 +1,12 @@
+# .editorconfig file for Neovim with Clangd and Lua configurations
+
+# Top-level configuration
+root = true
+
+# Settings for Lua files
+[*.lua]
+indent_size = 2
+indent_style = space
+tab_width = 2
+max_line_length = 80
+insert_final_newline = true
