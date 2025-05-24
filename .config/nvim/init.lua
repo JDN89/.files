@@ -63,6 +63,9 @@ end, { desc = "[S]mall [T]terminal" })
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
+-- LSP SETUP
+-- vim.lsp.enable({ "lua_ls", "rust-analyzer" })
+
 --https://www.youtube.com/watch?v=ooTcnx066Do
 --example on who to send commands to the terminal when openening the terminal
 -- vim.keymap.set("n", "<space>example", function()
