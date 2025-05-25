@@ -23,17 +23,37 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.o.guicursor = "n:block-blinkwait100-blinkon100-blinkoff100,i:ver10"
 
--- show virtual diagnostics
+-----------------------------
+-- VIRTUAL LINES: Start with virtual lines diabled
+-----------------------------
 vim.diagnostic.config({
-  -- Use the default configuration
-  -- virtual_lines = true
-
-  -- Alternatively, customize specific options
-  virtual_lines = {
-    -- Only show virtual line diagnostics for the current cursor line
-    current_line = true,
-  },
+  virtual_lines = false,
 })
+
+-- Track virtual lines state
+local virtual_lines_enabled = false
+
+-- Toggle function
+local function toggle_virtual_lines()
+  virtual_lines_enabled = not virtual_lines_enabled
+
+  vim.diagnostic.config({
+    -- true {true} or false = true
+    -- false and {true} -> false
+    -- false 0r false -> false
+    virtual_lines = virtual_lines_enabled and { current_line = true } or false,
+  })
+  print("Virtual lines: " .. (virtual_lines_enabled and "ON" or "OFF"))
+end
+
+-- Keymap: <leader>vt
+vim.keymap.set(
+  "n",
+  "<leader>vt",
+  toggle_virtual_lines,
+  { desc = "[T]oggle [V]irtual diagnostic lines" }
+)
+----------------------------
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking text",
