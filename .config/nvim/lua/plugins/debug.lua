@@ -92,38 +92,21 @@ return {
       layouts = {
         {
           elements = {
-            {
-              id = "scopes",
-              size = 0.20,
-            },
-            {
-              id = "breakpoints",
-              size = 0.20,
-            },
-            -- {
-            --   id = "stacks",
-            --   size = 0.20
-            -- -- },
-            -- {
-            --   id = "watches",
-            --   size = 0.20
-            -- } },
+            { id = "scopes", size = 0.33 },
+            -- { id = "breakpoints", size = 0.33 },
+            { id = "stacks", size = 0.33 },
+            { id = "watches", size = 0.34 },
           },
           position = "left",
-          size = 80,
+          size = 30, -- Use 30–40 cols for side panel (not 80)
         },
         {
           elements = {
-            {
-              id = "repl",
-              size = 0.5,
-            },
-          }, -- {
-          --   id = "console",
-          --   size = 0.5
-          -- } },
+            { id = "repl", size = 0.5 },
+            { id = "console", size = 0.5 },
+          },
           position = "bottom",
-          size = 20,
+          size = 10, -- 8–15 lines is enough
         },
       },
     })
