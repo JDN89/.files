@@ -10,8 +10,8 @@ adjust-cursor-thickness = 150%
 # # Use a simple titlebar:
 # gtk-titlebar = false
 
-# theme = catppuccin-latte
-theme = catppuccin-frappe
+theme = catppuccin-latte
+# theme = catppuccin-frappe
 
 # Cursor:
 cursor-color = F8F8F2

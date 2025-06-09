@@ -15,8 +15,8 @@ echo "Linking ~/.files/.config/lazygit -> ~/.config/lazygit"
 ln -sfn "$HOME/.files/.config/lazygit" "$HOME/.config/lazygit"
 
 # Neofetch
-echo "Linking ~/.files/.config/neofetch -> ~/.config/neofetch"
-ln -sfn "$HOME/.files/.config/neofetch" "$HOME/.config/neofetch"
+#echo "Linking ~/.files/.config/neofetch -> ~/.config/neofetch"
+#ln -sfn "$HOME/.files/.config/neofetch" "$HOME/.config/neofetch"
 
 # Neovim
 echo "Linking ~/.files/.config/nvim -> ~/.config/nvim"
@@ -24,6 +24,17 @@ ln -sfn "$HOME/.files/.config/nvim" "$HOME/.config/nvim"
 
 echo "📁 Ensuring ~/.files/.local/share exists..."
 mkdir -p "$HOME/.files/.local/share"
+
+# Ensure ~/.local/bin exists
+mkdir -p "$HOME/.local/bin"
+
+# Install Starship if not installed
+if ! command -v starship &> /dev/null; then
+    echo "🌟 Installing Starship prompt..."
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+else
+    echo "🌟 Starship already installed"
+fi
 
 # Move fonts if not symlink
 if [ -d "$HOME/.local/share/fonts" ] && [ ! -L "$HOME/.local/share/fonts" ]; then
