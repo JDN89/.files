@@ -1,6 +1,11 @@
 require("config.lazy")
+require("lsp")
 
 -- test
+
+-- vim.lsp.enable({ "rust_analyzer" })
+
+--
 
 vim.opt.shiftwidth = 4
 

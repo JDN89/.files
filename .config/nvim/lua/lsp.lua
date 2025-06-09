@@ -1,4 +1,3 @@
-local M = {}
 -- vim.lsp.enable({ "clangd" })
 vim.lsp.enable({ "lua_ls", "rust_analyzer" })
 
@@ -104,4 +103,3 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
-return M
