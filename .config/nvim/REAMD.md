@@ -1,7 +1,8 @@
 ### issues
-I am using the new neovim setup for lsp, but i couldn't get lsp to be loaded. The issue was that i wasn't requiring lsp in my init.lua...
-At the moment I can't get the lua language server to work. The binary is not execuatebale. I think the solution is th use the prebuild binaries instead of building from source. But this is for another day.
-Building the lsps from source is a hassle. fin a way to use mason
+Can't debug nvim plugins or source code. I've tried to set it up for lua, but i didn't get it to work and with the baby not enough time to focus on this issue atm. I'll continue reading docs in my freetime and see what else I can do.
+to set it up follow:
+[Debugging your Neovim configuration](https://www.youtube.com/watch?v=47UGK4NgvC8)
+start with a clean slate,  just for lua and see if I can get it to work
 
 ### TODO
 - [ ] fix aggreassive autocomplete blink cmp

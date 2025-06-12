@@ -1,26 +1,3 @@
--- debug.lua
---
--- local arrows = require('icons').arrows
---
--- -- Set up icons.
--- local icons = {
---   Stopped = { '', 'DiagnosticWarn', 'DapStoppedLine' },
---   Breakpoint = '',
---   BreakpointCondition = '',
---   BreakpointRejected = { '', 'DiagnosticError' },
---   LogPoint = arrows.right,
--- }
--- for name, sign in pairs(icons) do
---   sign = type(sign) == 'table' and sign or { sign }
---   vim.fn.sign_define('Dap' .. name, {
---     -- stylua: ignore
---     text = sign[1] --[[@as string]] .. ' ',
---     texthl = sign[2] or 'DiagnosticInfo',
---     linehl = sign[3],
---     numhl = sign[3],
---   })
--- end
---
 return {
   "mfussenegger/nvim-dap",
   dependencies = {
@@ -36,24 +13,13 @@ return {
       opts = { virt_text_pos = 'eol' },
     },
 
-    -- ✅ Lua DAP adapter
-    {
-      "jbyuki/one-small-step-for-vimkind",
-      keys = {
-        {
-          "<leader>dl",
-          function()
-            require("osv").launch({ port = 8086 })
-          end,
-          desc = "Debug: Launch Lua adapter",
-        },
-      },
-    },
   },
   keys = function(_, keys)
     local dap = require("dap")
     local dapui = require("dapui")
     return {
+      -- TODO doesn't work?
+      -- { "<A-5>", function() dapui.toggle() end, desc = "Toggle Debugger UI" },
       { "<F9>",  dap.continue,  desc = "Debug: Start/Continue" },
       { "<F7>",  dap.step_into, desc = "Debug: Step Into" },
       { "<F8>",  dap.step_over, desc = "Debug: Step Over" },
@@ -85,6 +51,25 @@ return {
     local dap = require("dap")
     local dapui = require("dapui")
 
+    -- use nvim-dap events to open and close the windows automatically
+    dap.listeners.before.attach.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.launch.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.event_terminated.dapui_config = function()
+      dapui.close()
+    end
+    dap.listeners.before.event_exited.dapui_config = function()
+      dapui.close()
+    end
+
+    vim.fn.sign_define('DapBreakpoint', { text = '⏺', texthl = 'DiagnosticSignError', linehl = '', numhl = '' })
+    vim.fn.sign_define('DapStopped', { text = '➡', texthl = 'DiagnosticSignInfo', linehl = 'Visual', numhl = '' })
+    vim.fn.sign_define('DapBreakpointRejected', { text = '✖', texthl = 'DiagnosticSignError', linehl = '', numhl = '' })
+    vim.fn.sign_define('DapLogPoint', { text = '🛈', texthl = 'DiagnosticSignHint', linehl = '', numhl = '' })
+
     require("mason-nvim-dap").setup({
       automatic_installation = true,
       handlers = {},
@@ -92,6 +77,11 @@ return {
         "delve",
         "codelldb",
       },
+    })
+
+    -- Setup virtual text plugin
+    require("nvim-dap-virtual-text").setup({
+      virt_text_pos = 'eol',
     })
 
     dapui.setup({
@@ -122,42 +112,12 @@ return {
       },
     })
 
-    -- use nvim-dap events to open and close the windows automatically
-    local dap, dapui = require("dap"), require("dapui")
-    dap.listeners.before.attach.dapui_config = function()
-      dapui.open()
-    end
-    dap.listeners.before.launch.dapui_config = function()
-      dapui.open()
-    end
-    dap.listeners.before.event_terminated.dapui_config = function()
-      dapui.close()
-    end
-    dap.listeners.before.event_exited.dapui_config = function()
-      dapui.close()
-    end
-
     -- Go config
     require("dap-go").setup({
       delve = {
         detached = vim.fn.has("win32") == 0,
       },
     })
-
-    -- Lua adapter via OSV
-    dap.adapters.nlua = function(callback, config)
-      callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
-    end
-
-    dap.configurations.lua = {
-      {
-        type = "nlua",
-        request = "attach",
-        name = "Attach to running Neovim instance",
-        host = "127.0.0.1",
-        port = 8086,
-      },
-    }
 
     -- C/C++ and Rust using codelldb
     dap.adapters.codelldb = {
