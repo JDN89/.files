@@ -1,5 +1,5 @@
 -- Download the .gz file that meets your architecture, don't build from source
--- Add to ~/.local/share/lua-lang-server. 
+-- Add to ~/.local/share/lua-lang-server.
 -- mkdir -p ~/.local/share/lua-lang-server && \
 -- tar --extract --file <YOUR .gz FILE> -av -C ~/.local/share/lua-lang-server
 -- Create a symbolic link in ~/.local/bin to the executable.
@@ -12,12 +12,17 @@ return {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },
   root_markers = { ".luarc.json", ".luarc.jsonc" },
-  -- NOTE: These will be merged with the configuration file.
+  --turn off - on for debuggin purposses
+  capabilities = (function()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.workspace = capabilities.workspace or {}
+    capabilities.workspace.didChangeWatchedFiles = { dynamicRegistration = true }
+    return capabilities
+  end)(),
   settings = {
     Lua = {
       completion = { callSnippet = "Replace" },
-      -- Using stylua for formatting.
-      format = { enable = false },
+      format = { enable = true },
       hint = {
         enable = true,
         arrayIndex = "Disable",
