@@ -8,13 +8,14 @@ adjust-underline-thickness = 40%
 adjust-cursor-thickness = 150%
 
 # # Use a simple titlebar:
-# gtk-titlebar = false
+gtk-titlebar = false
 
-theme = catppuccin-latte
+theme = dark:catppuccin-frappe,light:catppuccin-latte
+# theme = catppuccin-latte
 # theme = catppuccin-frappe
 
 # Cursor:
-cursor-color = F8F8F2
+cursor-color = B0B0A0
 cursor-style-blink = false
 cursor-text = 000000
 shell-integration-features = no-cursor

@@ -158,6 +158,7 @@ return {
 
     dap.configurations.c = dap.configurations.cpp
 
+    -- Rust configurations
     dap.configurations.rust = {
       {
         name = "Debug executable (Rust)",
@@ -171,6 +172,24 @@ return {
         args = function()
           local input = vim.fn.input("Program arguments: ")
           return vim.split(input, " ")
+        end,
+      },
+      {
+        name = "Debug Cargo Test",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+          return vim.fn.input("Path to test executable: ", vim.fn.getcwd() .. "/target/debug/deps/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+        args = function()
+          local test_name = vim.fn.input("Test name (leave empty to run all): ")
+          local args = { "--nocapture" }
+          if test_name ~= "" then
+            table.insert(args, test_name)
+          end
+          return args
         end,
       },
     }
