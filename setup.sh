@@ -10,6 +10,10 @@ ln -sfn "$HOME/.files/.config/fish" "$HOME/.config/fish"
 echo "Linking ~/.files/.config/ghostty -> ~/.config/ghostty"
 ln -sfn "$HOME/.files/.config/ghostty" "$HOME/.config/ghostty"
 
+#AWESOME WM
+echo "Linking ~/.files/.config/awesome -> ~/.config/awesome"
+ln -sfn "$HOME/.files/.config/awesome" "$HOME/.config/awesome"
+
 # Lazygit
 echo "Linking ~/.files/.config/lazygit -> ~/.config/lazygit"
 ln -sfn "$HOME/.files/.config/lazygit" "$HOME/.config/lazygit"
