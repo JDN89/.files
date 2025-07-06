@@ -9,10 +9,9 @@ return {
     --
     -- Virtual text.
     {
-      'theHamsta/nvim-dap-virtual-text',
-      opts = { virt_text_pos = 'eol' },
+      "theHamsta/nvim-dap-virtual-text",
+      opts = { virt_text_pos = "eol" },
     },
-
   },
   keys = function(_, keys)
     local dap = require("dap")
@@ -25,16 +24,16 @@ return {
       { "<F8>",  dap.step_over, desc = "Debug: Step Over" },
       { "<F12>", dap.step_out,  desc = "Debug: Step Out" },
       {
-        '<leader>db',
+        "<leader>db",
         function()
-          require('dap').toggle_breakpoint()
+          require("dap").toggle_breakpoint()
         end,
-        desc = 'Toggle breakpoint',
+        desc = "Toggle breakpoint",
       },
       {
-        '<leader>dB',
-        '<cmd>FzfLua dap_breakpoints<cr>',
-        desc = 'List breakpoints',
+        "<leader>dB",
+        "<cmd>FzfLua dap_breakpoints<cr>",
+        desc = "List breakpoints",
       },
       {
         "<C-S-F8>",
@@ -65,10 +64,27 @@ return {
       dapui.close()
     end
 
-    vim.fn.sign_define('DapBreakpoint', { text = '⏺', texthl = 'DiagnosticSignError', linehl = '', numhl = '' })
-    vim.fn.sign_define('DapStopped', { text = '➡', texthl = 'DiagnosticSignInfo', linehl = 'Visual', numhl = '' })
-    vim.fn.sign_define('DapBreakpointRejected', { text = '✖', texthl = 'DiagnosticSignError', linehl = '', numhl = '' })
-    vim.fn.sign_define('DapLogPoint', { text = '🛈', texthl = 'DiagnosticSignHint', linehl = '', numhl = '' })
+    vim.fn.sign_define(
+      "DapBreakpoint",
+      { text = "⏺", texthl = "DiagnosticSignError", linehl = "", numhl = "" }
+    )
+    vim.fn.sign_define(
+      "DapStopped",
+      {
+        text = "➡",
+        texthl = "DiagnosticSignInfo",
+        linehl = "Visual",
+        numhl = "",
+      }
+    )
+    vim.fn.sign_define(
+      "DapBreakpointRejected",
+      { text = "✖", texthl = "DiagnosticSignError", linehl = "", numhl = "" }
+    )
+    vim.fn.sign_define(
+      "DapLogPoint",
+      { text = "🛈", texthl = "DiagnosticSignHint", linehl = "", numhl = "" }
+    )
 
     require("mason-nvim-dap").setup({
       automatic_installation = true,
@@ -81,7 +97,7 @@ return {
 
     -- Setup virtual text plugin
     require("nvim-dap-virtual-text").setup({
-      virt_text_pos = 'eol',
+      virt_text_pos = "eol",
     })
 
     dapui.setup({
@@ -165,7 +181,11 @@ return {
         type = "codelldb",
         request = "launch",
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+          return vim.fn.input(
+            "Path to executable: ",
+            vim.fn.getcwd() .. "/target/debug/",
+            "file"
+          )
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
@@ -179,7 +199,11 @@ return {
         type = "codelldb",
         request = "launch",
         program = function()
-          return vim.fn.input("Path to test executable: ", vim.fn.getcwd() .. "/target/debug/deps/", "file")
+          return vim.fn.input(
+            "Path to test executable: ",
+            vim.fn.getcwd() .. "/target/debug/deps/",
+            "file"
+          )
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
