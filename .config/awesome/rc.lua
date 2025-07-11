@@ -52,7 +52,7 @@ end
 -- Themes define colours, icons, font and wallpapers.
 
 beautiful.init("/home/jdn/.config/awesome/theme.lua")
-beautiful.useless_gap = 10
+beautiful.useless_gap = 5
 beautiful.gap_single_client = true
 
 -- This is used later as the default terminal and editor to run.
